@@ -38,6 +38,15 @@ class TeachersReferral(models.Model):
                 'referred_teacher': self.teacher_id.id
 
             })
+        self.state = 'confirm'
+        return {
+            'effect': {
+                'fadeout': 'slow',
+                'message': 'Your Referral Form Submitted Successfully',
+                'type': 'rainbow_man',
+            }
+        }
+
 
     def _compute_display_name(self):
         for rec in self:
