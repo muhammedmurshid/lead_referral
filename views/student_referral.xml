@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_logic_leads_student_referral_form_view" model="ir.ui.view">
+        <field name="name">Student Referral Lead</field>
+        <field name="model">student.lead.referral</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Types">
+                <!--                <header>-->
+                <!--                    <field name="state" widget="statusbar"/>-->
+                <!--                    <button name="action_add_lead" type="object" states="draft" string="Confirm" class="oe_highlight"/>-->
+                <!--                </header>-->
+
+                <sheet>
+                    <!--                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"-->
+                    <!--                            attrs="{'invisible': [('state', '!=', 'confirm')]}"/>-->
+                    <group>
+                        <group>
+                            <field name="name" placeholder="Existing student name"/>
+                            <field name="course"/>
+                            <field name="year_of_batch"/>
+                            <field name="branch"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                        </group>
+                        <group>
+                            <field name="account_no"/>
+                            <field name="account_holder_name"/>
+                            <field name="ifsc_code"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="model_logic_leads_student_referral_list_view" model="ir.ui.view">
+        <field name="name">Students Referral Leads</field>
+        <field name="model">student.lead.referral</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="course"/>
+                <field name="year_of_batch"/>
+                <field name="branch"/>
+                <field name="phone" widget="phone"/>
+                <field name="email" widget="email"/>
+
+            </tree>
+
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="model_logic_leads_student_referral_action">
+        <field name="name">Students Referral Leads</field>
+        <field name="res_model">student.lead.referral</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Student Referral"
+              id="model_logic_leads_student_referral_menu"
+              action="model_logic_leads_student_referral_action"
+              parent="model_leads_referral_main_menu"
+              sequence="2"/>
+
+
+</odoo>

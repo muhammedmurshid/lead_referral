@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.rule" id="leads_referral_base_staffs_rule">
+        <field name="name">Base users Access</field>
+        <field name="model_id" ref="model_lead_referral"/>
+        <field name="domain_force">[('create_uid.id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('lead_referral.leads_base_user_staff_referral'))]"/>
+    </record>
+    <record model="ir.rule" id="leads_referral_base_teachers_rule">
+        <field name="name">Only Own Leads </field>
+        <field name="model_id" ref="model_teachers_referral"/>
+        <field name="domain_force">[('create_uid.id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('lead_referral.leads_base_user_staff_referral'))]"/>
+    </record>
+    <record model="ir.rule" id="leads_referral_base_staffs_rule_teacher">
+        <field name="name">Only Own Leads</field>
+        <field name="model_id" ref="model_lead_referral"/>
+        <field name="domain_force">[('create_uid.id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('lead_referral.leads_base_user_staff_referral'))]"/>
+    </record>
+</odoo>

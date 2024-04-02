@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_staff_referral_manager,access_staff_referral,model_lead_referral,lead_referral.leads_manager_staff_referral,1,1,1,1
+access_staff_referral_user,access_staff_referral,model_lead_referral,lead_referral.leads_base_user_staff_referral,1,1,1,1
+
+access_student_referral_user,access_staff_referral,model_student_lead_referral,lead_referral.leads_manager_staff_referral,1,1,1,1
+access_teacher_referral,access_teacher_referral,model_teachers_referral,leads_teacher_user_staff_referral,1,1,1,1
+access_teacher_referral_student_details,access_teacher_referral_student_details,model_referral_students_details,,1,1,1,1
+access_staff_referral_teacher,access_staff_referral,model_lead_referral,lead_referral.leads_teacher_user_staff_referral,1,1,1,1

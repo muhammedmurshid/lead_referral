@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="model_logic_leads_referral_form_view" model="ir.ui.view">
+        <field name="name">Referral Leads</field>
+        <field name="model">lead.referral</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Types">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_add_lead" type="object" states="draft" string="Confirm" class="oe_highlight"/>
+                </header>
+
+                <sheet>
+                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                    <group>
+                        <group>
+                            <field name="lead_name" placeholder="student name"/>
+                            <field name="lead_source_id" options="{'no_create':True}"/>
+                            <field name="phone_number" widget="phone"/>
+                            <field name="email_address" widget="email"/>
+                        </group>
+                        <group>
+                            <field name="country"/>
+                            <field name="district"/>
+                            <field name="place"/>
+                            <field name="date" groups="base.group_no_one"/>
+                            <field name="course_id" options="{'no_create':True}"/>
+                            <field name="branch_id" options="{'no_create':True}"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="model_logic_leads_referral_tree_view" model="ir.ui.view">
+        <field name="name">Referral Leads</field>
+        <field name="model">lead.referral</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date"/>
+                <field name="lead_name"/>
+                <field name="lead_source_id" options="{'no_create':True}"/>
+                <field name="phone_number" widget="phone"/>
+                <field name="district"/>
+                <field name="state" widget="badge"/>
+
+            </tree>
+
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="model_logic_leads_referral_action">
+        <field name="name">Referral Leads</field>
+        <field name="res_model">lead.referral</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Referral Leads"
+              id="model_leads_referral_main_menu"
+              action="model_logic_leads_referral_action"
+              web_icon="lead_referral/static/description/icon.png"
+              sequence="10"/>
+
+    <menuitem name="Staffs Referral"
+              id="model_logic_leads_referral_menu"
+              action="model_logic_leads_referral_action"
+              parent="model_leads_referral_main_menu"
+              sequence="1"/>
+
+
+</odoo>

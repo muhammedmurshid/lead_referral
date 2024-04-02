@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_lead_referral_staff">
+            <field name="name">Lead Referral</field>
+            <field name="sequence">20</field>
+            <field name="visible" eval="0"/>
+        </record>
+        <record id="leads_manager_staff_referral" model="res.groups">
+            <field name="name">Leads Manager</field>
+            <field name="category_id" ref="module_lead_referral_staff"/>
+        </record>
+        <record id="leads_base_user_staff_referral" model="res.groups">
+            <field name="name">Staffs</field>
+            <field name="category_id" ref="module_lead_referral_staff"/>
+        </record>
+        <record id="leads_teacher_user_staff_referral" model="res.groups">
+            <field name="name">Teachers</field>
+            <field name="category_id" ref="module_lead_referral_staff"/>
+        </record>
+    </data>
+</odoo>
