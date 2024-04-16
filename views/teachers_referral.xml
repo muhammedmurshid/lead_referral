@@ -32,7 +32,11 @@
                                     <field name="mode_of_study"/>
                                     <field name="course_type"/>
                                     <field name="preferred_course_id" options="{'no_create':True}"/>
+                                    <field name="batch_id"/>
+                                    <field name="academic_year"/>
+                                    <field name="course_level"/>
                                     <field name="branch_id" options="{'no_create':True}"/>
+
                                 </tree>
                             </field>
                         </page>

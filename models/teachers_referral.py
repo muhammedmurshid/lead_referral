@@ -5,6 +5,7 @@ class TeachersReferral(models.Model):
     _name = 'teachers.referral'
     _description = 'Teachers Referral'
     _inherit = ['mail.thread', 'mail.activity.mixin']
+    _order = 'id desc'
 
     teacher_id = fields.Many2one('res.users', string='Teacher', default=lambda self: self.env.user, readonly=1)
     date = fields.Date(string='Date', required=1)
@@ -35,7 +36,11 @@ class TeachersReferral(models.Model):
                 'branch': i.branch_id.id,
                 'lead_quality': 'nil',
                 'lead_status': 'nil',
-                'referred_teacher': self.teacher_id.id
+                'referred_teacher': self.teacher_id.id,
+                'lead_user_type': 'teacher',
+                'course_level': i.course_level.id,
+                'academic_year': i.academic_year,
+                'preferred_batch_id': i.batch_id.id
 
             })
         self.state = 'confirm'
@@ -61,6 +66,7 @@ class LeadsStudentsDetails(models.Model):
     student_name = fields.Char(string='Student Name', required=1)
     contact_number = fields.Char(string='Contact Number', required=1)
     email = fields.Char(string='Email')
+    batch_id = fields.Many2one('logic.base.batch', string='Batch')
     district = fields.Selection([('wayanad', 'Wayanad'), ('ernakulam', 'Ernakulam'), ('kollam', 'Kollam'),
                                  ('thiruvananthapuram', 'Thiruvananthapuram'), ('kottayam', 'Kottayam'),
                                  ('kozhikode', 'Kozhikode'), ('palakkad', 'Palakkad'), ('kannur', 'Kannur'),
@@ -69,14 +75,17 @@ class LeadsStudentsDetails(models.Model):
                                  ('abroad', 'Abroad'), ('other', 'Other'), ('nil', 'Nil')],
                                 string='District', required=True)
     mode_of_study = fields.Selection([('online', 'Online'), ('offline', 'Offline'), ('nil', 'Nil')],
-                                     string='Mode of Study')
+                                     string='Mode of Study', required=1)
     course_type = fields.Selection([('indian', 'Indian'), ('international', 'International'), ('crash', 'Crash Course'),
-                                    ('repeaters', 'Repeaters'), ('nil', 'Nil')], string='Course Type')
+                                    ('repeaters', 'Repeaters'), ('nil', 'Nil')], string='Course Type', required=1)
+    academic_year = fields.Selection(
+        [('2020', '2020'), ('2021', '2021'), ('2022', '2022'), ('2023', '2023'), ('2024', '2024'), ('2025', '2025'),
+         ('2026', '2026'), ('nil', 'Nil')], string='Academic Year', required=True)
 
-    branch_id = fields.Many2one('logic.base.branches', string='Branch')
+    branch_id = fields.Many2one('logic.base.branches', string='Branch', required=1)
     referral_id = fields.Many2one('teachers.referral', string='Referral Id', ondelete='cascade')
 
-    @api.onchange('course_type')
+    @api.onchange('course_type','preferred_course_id')
     def _onchange_get_course_type_matched_course(self):
         source = self.env['logic.base.courses'].sudo().search([('type', '=', self.course_type), ('state', '=', 'done')])
         courses = []
@@ -86,4 +95,7 @@ class LeadsStudentsDetails(models.Model):
         return {'domain': {'preferred_course_id': domain}}
 
     preferred_course_id = fields.Many2one('logic.base.courses', string='Preferred Course',
-                                          domain=_onchange_get_course_type_matched_course)
+                                          domain=[('type', '=', course_type)], required=1)
+
+    course_level = fields.Many2one('course.levels', string='Course Level', required=1, domain="[('course_id', '=', preferred_course_id)]")
+
