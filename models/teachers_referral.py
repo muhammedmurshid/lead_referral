@@ -23,6 +23,8 @@ class TeachersReferral(models.Model):
                                      domain=_onchange_get_referral_lead_source)
 
     def action_add_to_lead(self):
+        leads_status = self.env['lead.status'].sudo().search([('name', '=', 'Nil')])
+
         for i in self.referral_ids:
             leads = self.env['leads.logic'].sudo().create({
                 'leads_source': self.lead_source_id.id,
@@ -35,7 +37,7 @@ class TeachersReferral(models.Model):
                 'base_course_id': i.preferred_course_id.id,
                 'branch': i.branch_id.id,
                 'lead_quality': 'nil',
-                # 'lead_status': 'nil',
+                'remarks_lead_user_id': leads_status.id,
                 'referred_teacher': self.teacher_id.id,
                 'lead_user_type': 'teacher',
                 'course_level': i.course_level.id,
