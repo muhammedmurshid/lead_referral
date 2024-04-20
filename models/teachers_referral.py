@@ -35,7 +35,7 @@ class TeachersReferral(models.Model):
                 'base_course_id': i.preferred_course_id.id,
                 'branch': i.branch_id.id,
                 'lead_quality': 'nil',
-                'lead_status': 'nil',
+                # 'lead_status': 'nil',
                 'referred_teacher': self.teacher_id.id,
                 'lead_user_type': 'teacher',
                 'course_level': i.course_level.id,
