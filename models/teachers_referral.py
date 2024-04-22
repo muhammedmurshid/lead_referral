@@ -14,7 +14,7 @@ class TeachersReferral(models.Model):
 
     @api.onchange('teacher_id')
     def _onchange_get_referral_lead_source(self):
-        source = self.env['leads.sources'].sudo().search([('name', '=', 'Student Referral')])
+        source = self.env['leads.sources'].sudo().search([('name', '=', 'Reference')])
         print('source', source.id)
         domain = [('id', '=', source.id)]
         return {'domain': {'lead_source_id': domain}}
@@ -42,7 +42,8 @@ class TeachersReferral(models.Model):
                 'lead_user_type': 'teacher',
                 'course_level': i.course_level.id,
                 'academic_year': i.academic_year,
-                'preferred_batch_id': i.batch_id.id
+                'preferred_batch_id': i.batch_id.id,
+                'referred_by': 'staff'
 
             })
         self.state = 'confirm'

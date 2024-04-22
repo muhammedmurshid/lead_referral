@@ -7,7 +7,7 @@ class LeadReferral(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     lead_name = fields.Char('Name', required=True)
-    lead_source_id = fields.Many2one('leads.sources', 'Lead Source', domain="[('name', '=', 'Logic Staff')]",
+    lead_source_id = fields.Many2one('leads.sources', 'Lead Source', domain="[('name', '=', 'Reference')]",
                                      required=1)
     date = fields.Date(default=fields.Date.today())
     email_address = fields.Char(string='Email Address')
@@ -49,10 +49,11 @@ class LeadReferral(models.Model):
             'base_course_id': self.course_id.id,
             'branch': self.branch_id.id,
             'lead_quality': 'nil',
-            'lead_status': leads_status.id,
+            'remarks_lead_user_id': leads_status.id,
             'lead_referral_staff_id': self.create_uid.id,
             'lead_owner': self.create_uid.employee_id.id,
             'mode_of_study': 'nil',
+            'referred_by': 'staff'
         })
         self.write({'state': 'confirm'})
         print('action add lead')
